@@ -23,3 +23,7 @@ npm install --save-dev --save-exact prettier
 npm install --save-dev eslint-config-prettier
 ```
 https://github.com/prettier/eslint-config-prettier
+
+```
+npm install styled-components
+```
