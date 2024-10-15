@@ -17,3 +17,8 @@ https://github.com/jsx-eslint/eslint-plugin-react
 npm install react-router-dom
 ```
 https://reactrouter.com/en/main/start/tutorial
+
+```
+npm install --save-dev eslint-config-prettier
+```
+https://github.com/prettier/eslint-config-prettier
