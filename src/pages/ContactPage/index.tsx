@@ -1,15 +1,14 @@
-import { Form } from 'react-router-dom';
+import { Form, useLoaderData } from 'react-router-dom';
 import { Contact, ContactControls, ContactHeader, ContactImg, ContactNotes, ContactTwitter, ContactTwitterLink } from './styles';
+import { getContact } from '../../apis/contact';
+
+export async function loader({ params }) {
+  const contact = await getContact(params.contactId);
+  return { contact };
+}
 
 const ContactPage = () => {
-  const contact = {
-    first: 'Your',
-    last: 'Name',
-    avatar: 'https://robohash.org/you.png?size=200x200',
-    twitter: 'your_handle',
-    notes: 'Some notes',
-    favorite: true,
-  };
+  const { contact } = useLoaderData();
 
   return (
     <Contact id="contact">

@@ -1,3 +1,4 @@
+import { Form } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 
 export const Sidebar = styled.div`
@@ -41,7 +42,7 @@ export const SidebarHeader = styled.div`
   border-bottom: 1px solid #e3e3e3;
 `;
 
-export const SidebarForm = styled.form`
+export const SidebarForm = styled(Form)`
   position: relative;
 `;
 

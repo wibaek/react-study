@@ -2,19 +2,24 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
-import RootPage from './pages/RootPage';
+import RootPage, { action as rootAction, loader as rootLoader } from './pages/RootPage';
 import ErrorPage from './pages/ErrorPage';
-import ContactPage from './pages/ContactPage';
+import ContactPage, { loader as contactLoader } from './pages/ContactPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <RootPage />,
     errorElement: <ErrorPage />,
-  },
-  {
-    path: 'contacts/:contactId',
-    element: <ContactPage />,
+    loader: rootLoader,
+    action: rootAction,
+    children: [
+      {
+        path: 'contacts/:contactId',
+        element: <ContactPage />,
+        loader: contactLoader,
+      },
+    ],
   },
 ]);
 
