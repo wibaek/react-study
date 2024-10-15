@@ -27,3 +27,8 @@ https://github.com/prettier/eslint-config-prettier
 ```
 npm install styled-components
 ```
+
+```
+npm install localforage match-sorter
+```
+react-router-dom 예시 구현용
