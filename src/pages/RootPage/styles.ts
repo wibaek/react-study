@@ -106,25 +106,25 @@ export const SidebarNavList = styled.ul`
 
 export const SidebarNavItem = styled.li`
   margin: 0.25rem 0;
-`;
 
-export const SidebarNavLink = styled.a`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  overflow: hidden;
-  white-space: pre;
-  padding: 0.5rem;
-  border-radius: 8px;
-  color: inherit;
-  text-decoration: none;
-  gap: 1rem;
+  & > a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    white-space: pre;
+    padding: 0.5rem;
+    border-radius: 8px;
+    color: inherit;
+    text-decoration: none;
+    gap: 1rem;
+  }
 
-  &:hover {
+  & > a:hover {
     background: #e3e3e3;
   }
 
-  &.active {
+  & > a.active {
     background: hsl(224, 98%, 58%);
     color: white;
 
@@ -137,7 +137,19 @@ export const SidebarNavLink = styled.a`
     }
   }
 
-  &.pending {
+  & > a.pending {
     color: hsl(224, 98%, 58%);
+  }
+`;
+
+export const Detail = styled.div`
+  flex: 1;
+  padding: 2rem 4rem;
+  width: 100%;
+
+  &.loading {
+    opacity: 0.25;
+    transition: opacity 200ms;
+    transition-delay: 200ms;
   }
 `;

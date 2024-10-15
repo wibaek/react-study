@@ -1,4 +1,5 @@
-import { SearchSpinner, Sidebar, SidebarButton, SidebarForm, SidebarTitle, SidebarSearch, SrOnly, SidebarHeader, SidebarNav, SidebarNavList, SidebarNavItem, SidebarNavLink } from './styles';
+import { Link, Outlet } from 'react-router-dom';
+import { SearchSpinner, Sidebar, SidebarButton, SidebarForm, SidebarTitle, SidebarSearch, SrOnly, SidebarHeader, SidebarNav, SidebarNavList, SidebarNavItem, Detail } from './styles';
 
 const RootPage = () => {
   return (
@@ -18,15 +19,17 @@ const RootPage = () => {
         <SidebarNav>
           <SidebarNavList>
             <SidebarNavItem>
-              <SidebarNavLink href={`/contacts/1`}>Your Name</SidebarNavLink>
+              <Link to={`/contacts/1`}>Your Name</Link>
             </SidebarNavItem>
             <SidebarNavItem>
-              <SidebarNavLink href={`/contacts/2`}>Your Friend</SidebarNavLink>
+              <Link to={`/contacts/2`}>Your Friend</Link>
             </SidebarNavItem>
           </SidebarNavList>
         </SidebarNav>
       </Sidebar>
-      <div id="detail"></div>
+      <Detail id="detail">
+        <Outlet />
+      </Detail>
     </>
   );
 };
