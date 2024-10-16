@@ -1,11 +1,18 @@
-import { Form, useLoaderData } from 'react-router-dom';
+import { Form, useFetcher, useLoaderData } from 'react-router-dom';
 import { Contact, ContactControls, ContactHeader, ContactImg, ContactNotes, ContactTwitter, ContactTwitterLink } from './styles';
-import { getContact } from '../../apis/contact';
+import { getContact, updateContact } from '../../apis/contact';
 
-export async function loader({ params }) {
+export const action = async ({ request, params }) => {
+  const formData = await request.formData();
+  return updateContact(params.contactId, {
+    favorite: formData.get('favorite') === 'true',
+  });
+};
+
+export const loader = async ({ params }) => {
   const contact = await getContact(params.contactId);
   return { contact };
-}
+};
 
 const ContactPage = () => {
   const { contact } = useLoaderData();
@@ -60,13 +67,14 @@ const ContactPage = () => {
 };
 
 function Favorite({ contact }) {
-  const favorite = contact.favorite;
+  const fetcher = useFetcher();
+  const favorite = fetcher.formData ? fetcher.formData.get('favorite') === 'true' : contact.favorite;
   return (
-    <Form method="post">
+    <fetcher.Form method="post">
       <button name="favorite" value={favorite ? 'false' : 'true'} aria-label={favorite ? 'Remove from favorites' : 'Add to favorites'}>
         {favorite ? '★' : '☆'}
       </button>
-    </Form>
+    </fetcher.Form>
   );
 }
 
