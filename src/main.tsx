@@ -6,6 +6,7 @@ import RootPage, { action as rootAction, loader as rootLoader } from './pages/Ro
 import ErrorPage from './pages/ErrorPage';
 import ContactPage, { loader as contactLoader } from './pages/ContactPage';
 import EditContact, { action as editAction } from './pages/ContactEditPage';
+import { action as destroyAction } from './pages/ContactRemovePage';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,11 @@ const router = createBrowserRouter([
         element: <EditContact />,
         loader: contactLoader,
         action: editAction,
+      },
+      {
+        path: 'contacts/:contactId/destroy',
+        action: destroyAction,
+        errorElement: <div>Oops! There was an error.</div>,
       },
     ],
   },

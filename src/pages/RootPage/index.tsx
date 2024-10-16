@@ -1,4 +1,4 @@
-import { Link, NavLink, Outlet, redirect, useLoaderData } from 'react-router-dom';
+import { Link, NavLink, Outlet, redirect, useLoaderData, useNavigation } from 'react-router-dom';
 import { SearchSpinner, Sidebar, SidebarButton, SidebarForm, SidebarTitle, SidebarSearch, SrOnly, SidebarHeader, SidebarNav, SidebarNavList, SidebarNavItem, Detail } from './styles';
 import { createContact, getContacts } from '../../apis/contact';
 
@@ -14,6 +14,7 @@ export async function loader() {
 
 const RootPage = () => {
   const { contacts } = useLoaderData();
+  const navigation = useNavigation();
 
   return (
     <>
@@ -56,7 +57,7 @@ const RootPage = () => {
           )}
         </SidebarNav>
       </Sidebar>
-      <Detail id="detail">
+      <Detail id="detail" className={navigation.state === 'loading' ? 'loading' : ''}>
         <Outlet />
       </Detail>
     </>
