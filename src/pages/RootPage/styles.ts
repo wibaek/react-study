@@ -97,6 +97,48 @@ export const SidebarNav = styled.nav`
   flex: 1;
   overflow: auto;
   padding-top: 1rem;
+
+  a span {
+    float: right;
+    color: #eeb004;
+  }
+  a.active span {
+    color: inherit;
+  }
+
+  i {
+    color: #818181;
+  }
+  .active i {
+    color: inherit;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+
+    white-space: pre;
+    padding: 0.5rem;
+    border-radius: 8px;
+    color: inherit;
+    text-decoration: none;
+    gap: 1rem;
+  }
+
+  a:hover {
+    background: #e3e3e3;
+  }
+
+  a.active {
+    background: hsl(224, 98%, 58%);
+    color: white;
+  }
+
+  v a.pending {
+    color: hsl(224, 98%, 58%);
+  }
 `;
 
 export const SidebarNavList = styled.ul`

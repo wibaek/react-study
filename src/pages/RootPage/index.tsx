@@ -1,10 +1,10 @@
-import { Link, Outlet, useLoaderData } from 'react-router-dom';
+import { Link, NavLink, Outlet, redirect, useLoaderData } from 'react-router-dom';
 import { SearchSpinner, Sidebar, SidebarButton, SidebarForm, SidebarTitle, SidebarSearch, SrOnly, SidebarHeader, SidebarNav, SidebarNavList, SidebarNavItem, Detail } from './styles';
 import { createContact, getContacts } from '../../apis/contact';
 
 export async function action() {
   const contact = await createContact();
-  return { contact };
+  return redirect(`/contacts/${contact.id}/edit`);
 }
 
 export async function loader() {
@@ -14,6 +14,7 @@ export async function loader() {
 
 const RootPage = () => {
   const { contacts } = useLoaderData();
+
   return (
     <>
       <Sidebar id="sidebar">
@@ -32,18 +33,20 @@ const RootPage = () => {
           {contacts.length ? (
             <SidebarNavList>
               {contacts.map((contact) => (
-                <SidebarNavItem key={contact.id}>
-                  <Link to={`contacts/${contact.id}`}>
-                    {contact.first || contact.last ? (
-                      <>
-                        {contact.first} {contact.last}
-                      </>
-                    ) : (
-                      <i>No Name</i>
-                    )}{' '}
-                    {contact.favorite && <span>★</span>}
-                  </Link>
-                </SidebarNavItem>
+                <NavLink key={contact.id} to={`contacts/${contact.id}`} className={({ isActive, isPending }) => (isActive ? 'active' : isPending ? 'pending' : '')}>
+                  <SidebarNavItem key={contact.id}>
+                    <Link to={`contacts/${contact.id}`}>
+                      {contact.first || contact.last ? (
+                        <>
+                          {contact.first} {contact.last}
+                        </>
+                      ) : (
+                        <i>No Name</i>
+                      )}{' '}
+                      {contact.favorite && <span>★</span>}
+                    </Link>
+                  </SidebarNavItem>
+                </NavLink>
               ))}
             </SidebarNavList>
           ) : (
