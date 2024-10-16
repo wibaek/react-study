@@ -1,20 +1,30 @@
-import { Link, NavLink, Outlet, redirect, useLoaderData, useNavigation } from 'react-router-dom';
+import { Link, NavLink, Outlet, redirect, useLoaderData, useNavigation, useSubmit } from 'react-router-dom';
 import { SearchSpinner, Sidebar, SidebarButton, SidebarForm, SidebarTitle, SidebarSearch, SrOnly, SidebarHeader, SidebarNav, SidebarNavList, SidebarNavItem, Detail } from './styles';
 import { createContact, getContacts } from '../../apis/contact';
+import { useEffect } from 'react';
 
 export async function action() {
   const contact = await createContact();
   return redirect(`/contacts/${contact.id}/edit`);
 }
 
-export async function loader() {
-  const contacts = await getContacts();
-  return { contacts };
+export async function loader({ request }) {
+  const url = new URL(request.url);
+  const q = url.searchParams.get('q');
+  const contacts = await getContacts(q);
+  return { contacts, q };
 }
 
 const RootPage = () => {
-  const { contacts } = useLoaderData();
+  const { contacts, q } = useLoaderData();
   const navigation = useNavigation();
+  const submit = useSubmit();
+
+  const searching = navigation.location && new URLSearchParams(navigation.location.search).has('q');
+
+  useEffect(() => {
+    document.getElementById('q').value = q;
+  }, [q]);
 
   return (
     <>
@@ -22,8 +32,22 @@ const RootPage = () => {
         <SidebarTitle>React Router Contacts</SidebarTitle>
         <SidebarHeader>
           <SidebarForm id="search-form" role="search">
-            <SidebarSearch id="q" aria-label="Search contacts" placeholder="Search" type="search" name="q" />
-            <SearchSpinner id="search-spinner" aria-hidden hidden={true} />
+            <SidebarSearch
+              id="q"
+              className={searching ? 'loading' : ''}
+              aria-label="Search contacts"
+              placeholder="Search"
+              type="search"
+              name="q"
+              defaultValue={q}
+              onChange={(event) => {
+                const isFirstSearch = q == null;
+                submit(event.currentTarget.form, {
+                  replace: !isFirstSearch,
+                });
+              }}
+            />
+            <SearchSpinner id="search-spinner" aria-hidden hidden={!searching} />
             <SrOnly className="sr-only" aria-live="polite"></SrOnly>
           </SidebarForm>
           <SidebarForm method="post">

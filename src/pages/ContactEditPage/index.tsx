@@ -1,4 +1,4 @@
-import { redirect, useLoaderData } from 'react-router-dom';
+import { redirect, useLoaderData, useNavigate } from 'react-router-dom';
 import { ContactForm } from './styles';
 import { updateContact } from '../../apis/contact';
 
@@ -11,6 +11,7 @@ export const action = async ({ request, params }) => {
 
 const EditContact = () => {
   const { contact } = useLoaderData();
+  const { navigate } = useNavigate();
 
   return (
     <ContactForm method="post" id="contact-form">
@@ -32,7 +33,14 @@ const EditContact = () => {
         <textarea name="notes" defaultValue={contact?.notes} rows={6} />
       </label>
       <p>
-        <button type="submit">Save</button>
+        <button
+          type="submit"
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          Save
+        </button>
         <button type="button">Cancel</button>
       </p>
     </ContactForm>
