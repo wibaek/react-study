@@ -7,6 +7,7 @@ import ErrorPage from './pages/ErrorPage';
 import ContactPage, { loader as contactLoader } from './pages/ContactPage';
 import EditContact, { action as editAction } from './pages/ContactEditPage';
 import { action as destroyAction } from './pages/ContactRemovePage';
+import IndexPage from './pages/IndexPage';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
     loader: rootLoader,
     action: rootAction,
     children: [
+      { index: true, element: <IndexPage /> },
       {
         path: 'contacts/:contactId',
         element: <ContactPage />,
